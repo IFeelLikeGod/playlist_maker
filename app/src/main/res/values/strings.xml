@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">playlist_maker</string>
+    <string name="title_hello" translatable="false">Привет, Практикум</string>
+    <string name="playlist_maker" translatable="false">Playlist maker</string>
+    <string name="lt" translatable="false"><![CDATA[<-]]></string>
+    <string name="Настройки" translatable="false">Настройки</string>
+    <string name="Поделиться_приложением" translatable="false">Поделиться приложением</string>
+    <string name="share_the_app" translatable="false">Поделиться приложением</string>
+    <string name="ask_the_support" translatable="false">Написать в поддержку</string>
+    <string name="share_">Поделиться</string>
+    <string name="support_">Написать в поддержку</string>
 </resources>
