@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         btnSettings.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+
         }
     }
 }
