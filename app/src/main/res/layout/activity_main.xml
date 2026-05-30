@@ -14,13 +14,11 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/MainMenuButton"
+        android:textColor="@color/white"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="24dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/playlist_maker"
-        android:textColor="@color/main_title_text"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:text="@string/playlist_maker"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSearch"
@@ -28,17 +26,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/main_button_background"
         android:text="@string/search"
-        android:textAllCaps="false"
-        android:textColor="@color/main_button_text"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:cornerRadius="8dp"
-        app:icon="@drawable/loop_light_mode"
-        app:iconGravity="textStart"
-        app:iconPadding="8dp"
-        app:iconTint="@color/main_button_icon" />
+        style="@style/MainMenuButton"
+        app:icon="@drawable/loop_light_mode" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLibrary"
@@ -46,33 +36,17 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/main_button_background"
         android:text="@string/media"
-        android:textAllCaps="false"
-        android:textColor="@color/main_button_text"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:cornerRadius="8dp"
-        app:icon="@drawable/light_mode_media"
-        app:iconGravity="textStart"
-        app:iconPadding="8dp"
-        app:iconTint="@color/main_button_icon" />
+        style="@style/MainMenuButton"
+        app:icon="@drawable/light_mode_media"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSettings"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:backgroundTint="@color/main_button_background"
         android:text="@string/Settings"
-        android:textAllCaps="false"
-        android:textColor="@color/main_button_text"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:cornerRadius="8dp"
-        app:icon="@drawable/group"
-        app:iconGravity="textStart"
-        app:iconPadding="8dp"
-        app:iconTint="@color/main_button_icon" />
+        style="@style/MainMenuButton"
+        app:icon="@drawable/group"/>
 
 </LinearLayout>

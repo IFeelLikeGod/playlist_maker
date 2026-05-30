@@ -6,6 +6,10 @@
     <color name="text_primary">#1A1B22</color>
     <color name="icon_primary">#1A1B22</color>
     <color name="icon_secondary">#AEAFB4</color>
+    <color name="search_field_bg">#EDEDED</color>
+    <color name="search_text_color">#000000</color>
+    <color name="search_hint_color">#8A000000</color>
+    <color name="search_clear_color">#8A000000</color>
 
     <color name="background_dark">#1A1B22</color>
     <color name="main_screen_background">#3772E7</color>
