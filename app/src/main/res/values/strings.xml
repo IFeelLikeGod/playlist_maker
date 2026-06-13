@@ -8,7 +8,7 @@
     <string name="share_course_message">
     Посмотри курс Android-разработчик от Яндекс Практикума: https://practicum.yandex.ru/courses/android-developer/
 </string>
-
+    <string name="clear">Очистить</string>
     <string name="support_email">student@example.com</string>
     <string name="support_subject">
     Сообщение разработчикам и разработчицам приложения Playlist Maker
