@@ -7,15 +7,15 @@
     <color name="icon_primary">#1A1B22</color>
     <color name="icon_secondary">#AEAFB4</color>
     <color name="search_field_bg">#EDEDED</color>
-    <color name="search_field_background">#E6E8EB</color>
-    <color name="search_text_color">#1A1B22</color>
-    <color name="search_hint_color">#AEAFB4</color>
     <color name="search_clear_color">#1A1B22</color>
-
     <color name="background_dark">#1A1B22</color>
     <color name="main_screen_background">#3772E7</color>
     <color name="main_title_text">#FFFFFF</color>
 
+    <color name="search_field_background">#E6E8EB</color>
+    <color name="search_icon_color">#AEAFB4</color>
+    <color name="search_hint_color">#AEAFB4</color>
+    <color name="search_text_color">#1A1B22</color>
 
     <color name="main_button_background">#FFFFFF</color>
     <color name="main_button_text">#1A1B22</color>
