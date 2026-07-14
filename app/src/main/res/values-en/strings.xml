@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">playlist_maker</string>
+    <string name="search">Search</string>
+    <string name="media">Media</string>
+    <string name="Settings">Settings</string>
+    <string name="share_course_message">
+    Check our Android Developer course here: https://practicum.yandex.ru/courses/android-developer/
+</string>
+    <string name="support_email">student@example.com</string>
+    <string name="support_subject">
+    Message to developers of playlist_maker app
+</string>
+    <string name="support_body">
+    Thank you for such a cool app!
+</string>
+    <string name="clear">Clear</string>
+    <string name="user_agreement_url">https://yandex.ru/legal/practicum_offer/ru/</string>
+    <string name="share_course_chooser_title">Share the link</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="agreement">User license</string>
+    <string name="share_">Share</string>
+    <string name="support_">Support</string>
+    <string name="back">"Back "</string>
+    <string name="clear_search">Delete</string>
+    <string name="share_the_app">Share the app</string>
+    <string name="ask_the_support">Ask the support</string>
 </resources>
