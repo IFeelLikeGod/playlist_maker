@@ -21,6 +21,9 @@
     <color name="main_button_text">#1A1B22</color>
     <color name="main_button_icon">#1A1B22</color>
 
+    <color name="track_name_color">#000000</color>
+    <color name="track_artist_time_color">#888888</color>
+    <color name="chevron_color">#AEAFB4</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#1A1B22</color>

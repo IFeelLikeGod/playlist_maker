@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
@@ -12,6 +14,7 @@ import androidx.core.widget.addTextChangedListener
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var etSearch: AppCompatEditText
+    private lateinit var recyclerView: RecyclerView
     private lateinit var ivClear: ImageView
     private var searchText: String = ""
 
@@ -25,9 +28,12 @@ class SearchActivity : AppCompatActivity() {
 
         etSearch = findViewById(R.id.etSearch)
         ivClear = findViewById(R.id.ivClear)
+        recyclerView = findViewById(R.id.recyclerView)
 
         val ivBack = findViewById<ImageView>(R.id.ivBack)
 
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = TrackAdapter(trackList)
         searchText = savedInstanceState?.getString(SEARCH_TEXT_KEY, "") ?: ""
         etSearch.setText(searchText)
         ivClear.visibility = if (searchText.isEmpty()) View.GONE else View.VISIBLE

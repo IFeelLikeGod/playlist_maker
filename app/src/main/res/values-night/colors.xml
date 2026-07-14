@@ -27,4 +27,7 @@
     <color name="blue">#1A1B22</color>
     <color name="gray">#AEAFB4</color>
 
+    <color name="track_name_color">#FFFFFF</color>
+    <color name="track_artist_time_color">#AAAAAA</color>
+    <color name="chevron_color">#FFFFFF</color>
 </resources>
