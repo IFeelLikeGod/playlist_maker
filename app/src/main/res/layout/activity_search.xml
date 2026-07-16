@@ -10,10 +10,10 @@
 
     <ImageButton
         android:id="@+id/ivBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="@dimen/search_back_button_size"
+        android:layout_height="@dimen/search_back_button_size"
+        android:layout_marginStart="@dimen/search_back_margin_start"
+        android:layout_marginTop="@dimen/search_back_margin_top"
         android:src="@drawable/arrow_back"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/back"
@@ -25,10 +25,10 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="@dimen/search_title_margin_start"
         android:text="@string/search"
         android:textColor="@color/text_primary"
-        android:textSize="22sp"
+        android:textSize="@dimen/search_title_text_size"
         android:fontFamily="sans-serif-medium"
         app:layout_constraintStart_toEndOf="@id/ivBack"
         app:layout_constraintTop_toTopOf="@id/ivBack"
@@ -37,21 +37,21 @@
     <FrameLayout
         android:id="@+id/searchContainer"
         android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="@dimen/search_container_height"
+        android:layout_marginStart="@dimen/search_container_margin"
+        android:layout_marginTop="@dimen/search_container_margin"
+        android:layout_marginEnd="@dimen/search_container_margin"
         android:background="@drawable/bg_search_field"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:paddingStart="@dimen/search_field_padding_horizontal"
+        android:paddingEnd="@dimen/search_field_padding_horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/ivSearchIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/search_icon_size"
+            android:layout_height="@dimen/search_icon_size"
             android:layout_gravity="start|center_vertical"
             android:src="@drawable/loop_light_mode"
             android:contentDescription="@string/search" />
@@ -69,13 +69,13 @@
             android:singleLine="true"
             android:textColor="@color/search_text_color"
             android:textColorHint="@color/search_hint_color"
-            android:paddingStart="40dp"
-            android:paddingEnd="32dp" />
+            android:paddingStart="@dimen/search_edit_padding_start"
+            android:paddingEnd="@dimen/search_edit_padding_end" />
 
         <ImageView
             android:id="@+id/ivClear"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="@dimen/search_clear_icon_size"
+            android:layout_height="@dimen/search_clear_icon_size"
             android:layout_gravity="end|center_vertical"
             android:src="@drawable/ic_clear"
             android:visibility="gone"
@@ -83,10 +83,12 @@
             app:tint="@color/search_clear_color" />
 
     </FrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/search_recycler_margin_top"
         app:layout_constraintTop_toBottomOf="@id/searchContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
