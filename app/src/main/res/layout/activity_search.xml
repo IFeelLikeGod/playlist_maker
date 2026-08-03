@@ -63,7 +63,7 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:hint="@string/search"
-            android:imeOptions="actionSearch"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
@@ -89,10 +89,75 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/search_recycler_margin_top"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/searchContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_track" />
+
+    <LinearLayout
+        android:id="@+id/placeholderEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/searchContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"            android:layout_height="@dimen/placeholder_image_size"
+            android:gravity="center"
+            android:src="@drawable/light_mode_pic"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/placeholder_text_margin_top"
+            android:text="@string/nothing_found"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/placeholder_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/placeholderError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/searchContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <ImageView
+            android:layout_width="match_parent"            android:layout_height="@dimen/placeholder_image_size"
+            android:gravity="center"
+            android:src="@drawable/placeholder_not_found"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/placeholder_text_margin_top"
+            android:text="@string/no_connection"
+            android:textColor="@color/text_secondary"
+                android:textSize="@dimen/placeholder_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/placeholder_button_margin_top"
+            style="@style/RetryButton"
+            android:text="@string/refresh" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
