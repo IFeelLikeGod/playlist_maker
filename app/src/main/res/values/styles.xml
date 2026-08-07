@@ -54,4 +54,8 @@
         <item name="android:backgroundTint">@color/button_refresh_background</item>
         <item name="android:textColor">@color/button_refresh_text_color</item>
     </style>
+
+    <style name="placeholder_no_internet_con">
+        <item name="android:src">@drawable/placeholder_no_internet</item>
+    </style>
 </resources>
