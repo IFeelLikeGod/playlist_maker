@@ -19,6 +19,7 @@
         override fun onCreate(savedInstanceState: Bundle?) {
             val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
             val isDark = prefs.getBoolean("dark_theme", false)
+            val app = applicationContext as App
 
             AppCompatDelegate.setDefaultNightMode(
                 if (isDark) AppCompatDelegate.MODE_NIGHT_YES
@@ -45,13 +46,9 @@
 
             switchTheme.isChecked = isDark
 
-            switchTheme.setOnCheckedChangeListener { _, isChecked ->
-                prefs.edit().putBoolean("dark_theme", isChecked).apply()
 
-                AppCompatDelegate.setDefaultNightMode(
-                    if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
-                    else AppCompatDelegate.MODE_NIGHT_NO
-                )
+            switchTheme.setOnCheckedChangeListener { switcher, checked ->
+                app.switchTheme(checked)
             }
 
             ivBack.setOnClickListener {

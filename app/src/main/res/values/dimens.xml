@@ -44,9 +44,11 @@
     <dimen name="track_text_margin_start">5dp</dimen>
     <dimen name="track_name_text_size">16sp</dimen>
     <dimen name="track_artist_time_text_size">12sp</dimen>
+    <dimen name="track_image_corner_radius">8dp</dimen>
     <dimen name="track_artist_time_margin_top">1dp</dimen>
     <dimen name="track_chevron_size">24dp</dimen>
 
+    <!-- Placeholder -->
     <dimen name="placeholder_image_size">120dp</dimen>
     <dimen name="placeholder_text_margin_top">16dp</dimen>
     <dimen name="placeholder_text_size">19sp</dimen>

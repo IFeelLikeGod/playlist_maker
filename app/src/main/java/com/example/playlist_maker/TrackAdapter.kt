@@ -14,12 +14,16 @@ class TrackAdapter(private val tracks: List<Track>) :
 
     class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val trackImage: ImageView = view.findViewById(R.id.trackImage)
+        private val trackTime: TextView = view.findViewById(R.id.trackTime)
         private val trackName: TextView = view.findViewById(R.id.trackName)
         private val trackArtistName: TextView = view.findViewById(R.id.trackArtistTime)
 
         fun bind(track: Track) {
             trackName.text = track.trackName
-            trackArtistName.text = "${track.artistName} • ${track.trackTime}"
+            trackArtistName.text = "${track.artistName} • "
+            trackTime.text = track.trackTime
+
+            val cornerRadiusPx = itemView.resources.getDimensionPixelSize(R.dimen.track_image_corner_radius)
 
             Glide.with(itemView.context)
                 .load(track.artworkUrl100)
