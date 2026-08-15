@@ -166,4 +166,44 @@
             android:text="@string/refresh" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/recentSearchesContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:paddingStart="@dimen/search_container_margin"
+        android:paddingEnd="@dimen/search_container_margin"
+        app:layout_constraintTop_toBottomOf="@id/searchContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/recent_searches_margin_top"
+            android:text="@string/recent_searches"
+            android:textColor="@color/text_recent_searches"
+            style="@style/recentSearches"
+            android:textSize="@dimen/recent_searches_size" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recentSearchesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_track" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:text="@string/clear_recent_searches"
+            style="@style/ClearHistoryButton">
+        </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

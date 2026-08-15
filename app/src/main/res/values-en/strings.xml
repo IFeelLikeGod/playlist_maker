@@ -29,4 +29,7 @@
     <string name="nothing_found">nothing found</string>
     <string name="no_connection">No Internet connection </string>
     <string name="refresh">Refresh</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear_recent_searches">Clear recent searches</string>
+
 </resources>

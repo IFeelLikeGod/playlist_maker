@@ -19,11 +19,15 @@ import androidx.core.widget.addTextChangedListener
 
 class SearchActivity : AppCompatActivity() {
 
+    private lateinit var searchHistory: SearchHistory
     private lateinit var etSearch: AppCompatEditText
 
     private lateinit var placeholderEmpty: LinearLayout
     private lateinit var placeholderError: LinearLayout
     private lateinit var btnRetry: Button
+    private lateinit var btnClear: Button
+    private lateinit var recentSearchesContainer: LinearLayout
+    private lateinit var recentSearchesRecyclerView: RecyclerView
 
     private var lastSearchText: String = ""
 
@@ -40,6 +44,8 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        searchHistory= SearchHistory(prefs)
 
         etSearch = findViewById(R.id.etSearch)
         ivClear = findViewById(R.id.ivClear)
@@ -47,12 +53,16 @@ class SearchActivity : AppCompatActivity() {
         placeholderEmpty = findViewById(R.id.placeholderEmpty)
         placeholderError = findViewById(R.id.placeholderError)
         btnRetry = findViewById(R.id.btnRetry)
+        btnClear = findViewById(R.id.btnClear)
+        recentSearchesContainer=findViewById(R.id.recentSearchesContainer)
+        recentSearchesRecyclerView=findViewById(R.id.recentSearchesRecyclerView)
 
         val ivBack = findViewById<ImageView>(R.id.ivBack)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        trackAdapter = TrackAdapter(currentTracks)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        trackAdapter = TrackAdapter(currentTracks) { track ->
+            searchHistory.add(track)
+        }
         recyclerView.adapter = trackAdapter
         searchText = savedInstanceState?.getString(SEARCH_TEXT_KEY, "") ?: ""
         etSearch.setText(searchText)
@@ -66,6 +76,7 @@ class SearchActivity : AppCompatActivity() {
         etSearch.addTextChangedListener { text ->
             searchText = text?.toString() ?: ""
             ivClear.visibility = if (searchText.isEmpty()) View.GONE else View.VISIBLE
+            updateHistoryVisibility()
         }
         etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -74,6 +85,9 @@ class SearchActivity : AppCompatActivity() {
             } else {
                 false
             }
+        }
+        etSearch.setOnFocusChangeListener { _, hasFocus ->
+            updateHistoryVisibility()
         }
         ivBack.setOnClickListener {
             finish()
@@ -94,6 +108,10 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.GONE
             placeholderEmpty.visibility = View.GONE
             placeholderError.visibility = View.GONE
+        }
+        btnClear.setOnClickListener {
+            searchHistory.clear()
+            updateHistoryVisibility()
         }
     }
 
@@ -137,6 +155,21 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.visibility = View.GONE
         placeholderEmpty.visibility = View.GONE
         placeholderError.visibility = View.VISIBLE
+    }
+    private fun updateHistoryVisibility() {
+        val history = searchHistory.read()
+        val shouldShowHistory = etSearch.hasFocus() && searchText.isEmpty() && history.isNotEmpty()
+        if (shouldShowHistory) {
+            recentSearchesContainer.visibility = View.VISIBLE
+            recentSearchesRecyclerView.layoutManager = LinearLayoutManager(this)
+            val historyAdapter = TrackAdapter(history) { track ->
+                searchHistory.add(track)
+                updateHistoryVisibility()
+            }
+            recentSearchesRecyclerView.adapter = historyAdapter
+        } else {
+            recentSearchesContainer.visibility = View.GONE
+        }
     }
     private fun performSearch(query: String) {
         if (query.isBlank()) return

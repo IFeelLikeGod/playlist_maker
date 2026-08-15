@@ -1,6 +1,7 @@
 package com.example.playlist_maker
 
 class Track(
+
     val trackName: String,      // Название композиции
     val artistName: String,     // Имя исполнителя
     val trackTime: String,      // Продолжительность трека

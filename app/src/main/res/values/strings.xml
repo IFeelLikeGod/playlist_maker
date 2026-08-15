@@ -34,4 +34,7 @@
     <string name="nothing_found">Ничего не нашлось</string>
     <string name="no_connection">Загрузка не удалась. Проверьте подключение к интернету</string>
     <string name="refresh">Обновить</string>
+    <string name="recent_searches">Вы искали</string>
+    <string name="clear_recent_searches">Очистить историю</string>
+
 </resources>
