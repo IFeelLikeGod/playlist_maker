@@ -7,6 +7,7 @@
     <string name="Поделиться_приложением" translatable="false">Поделиться приложением</string>
     <string name="share_course_message">
     Посмотри курс Android-разработчик от Яндекс Практикума: https://practicum.yandex.ru/courses/android-developer/
+
 </string>
     <string name="clear">Очистить</string>
     <string name="support_email">student@example.com</string>
@@ -29,4 +30,8 @@
     <string name="ask_the_support">Написать в поддержку</string>
     <string name="share_">Поделиться</string>
     <string name="support_">Написать в поддержку</string>
+
+    <string name="nothing_found">Ничего не нашлось</string>
+    <string name="no_connection">Загрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="refresh">Обновить</string>
 </resources>

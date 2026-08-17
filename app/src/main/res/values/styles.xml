@@ -18,6 +18,21 @@
         <item name="iconTint">@color/main_button_icon</item>
     </style>
 
+    <style name="TrackNameTextStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/track_name_text_size</item>
+        <item name="android:textColor">@color/track_name_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TrackArtistTimeTextStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/track_artist_time_text_size</item>
+        <item name="android:textColor">@color/track_artist_time_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -34,5 +49,13 @@
         <item name="iconPadding">8dp</item>
         <item name="cornerRadius">8dp</item>
         <item name="iconTint">@color/yp_black</item>
+    </style>
+    <style name="RetryButton">
+        <item name="android:backgroundTint">@color/button_refresh_background</item>
+        <item name="android:textColor">@color/button_refresh_text_color</item>
+    </style>
+
+    <style name="placeholder_no_internet_con">
+        <item name="android:src">@drawable/placeholder_no_internet</item>
     </style>
 </resources>

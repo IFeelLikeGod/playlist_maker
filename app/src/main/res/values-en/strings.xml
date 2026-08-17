@@ -25,4 +25,8 @@
     <string name="clear_search">Delete</string>
     <string name="share_the_app">Share the app</string>
     <string name="ask_the_support">Ask the support</string>
+
+    <string name="nothing_found">nothing found</string>
+    <string name="no_connection">No Internet connection </string>
+    <string name="refresh">Refresh</string>
 </resources>
