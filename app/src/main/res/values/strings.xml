@@ -37,4 +37,11 @@
     <string name="recent_searches">Вы искали</string>
     <string name="clear_recent_searches">Очистить историю</string>
 
+    <string name="play">Проигрывать</string>
+    <string name="duration_label">Длительность</string>
+    <string name="album_label">Альбом</string>
+    <string name="year_label">Год</string>
+    <string name="genre_label">Жанр</string>
+    <string name="country_label">Страна</string>
+
 </resources>

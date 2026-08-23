@@ -8,6 +8,14 @@ fun TrackDto.toTrack(): Track {
         trackName = this.trackName,
         artistName = this.artistName,
         trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(this.trackTimeMillis),
-        artworkUrl100 = this.artworkUrl100
+        artworkUrl100 = this.artworkUrl100,
+        collectionName = this.collectionName,
+        releaseDate = this.releaseDate,
+        primaryGenreName = this.primaryGenreName,
+        country = this.country
     )
+}
+
+fun Track.getCoverArtwork(): String {
+    return this.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 }
