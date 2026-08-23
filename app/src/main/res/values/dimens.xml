@@ -58,4 +58,13 @@
     <dimen name="recent_searches_size">19sp</dimen>
     <dimen name="recent_searches_margin_top">18dp</dimen>
     <dimen name="recent_searches_left">16dp</dimen>
+
+    <!-- textView for audio-player -->
+    <dimen name="detail_text_size">13sp</dimen>
+    <dimen name="detail_row_margin_top">16dp</dimen>
+
+    <!-- arrow_back for audio-player -->
+    <dimen name="arrow_back_audio_margin_top">24dp</dimen>
+    <dimen name="arrow_back_audio_margin_start">12dp</dimen>
+
 </resources>

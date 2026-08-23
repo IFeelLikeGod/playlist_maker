@@ -1,6 +1,7 @@
 package com.example.playlist_maker
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
+import com.google.gson.Gson
 
 class SearchActivity : AppCompatActivity() {
 
@@ -62,6 +64,11 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         trackAdapter = TrackAdapter(currentTracks) { track ->
             searchHistory.add(track)
+            val json = Gson().toJson(track)
+
+            val intent = Intent(this, AudioPlayerActivity::class.java)
+            intent.putExtra("track", json)
+            startActivity(intent)
         }
         recyclerView.adapter = trackAdapter
         searchText = savedInstanceState?.getString(SEARCH_TEXT_KEY, "") ?: ""
@@ -165,6 +172,11 @@ class SearchActivity : AppCompatActivity() {
             val historyAdapter = TrackAdapter(history) { track ->
                 searchHistory.add(track)
                 updateHistoryVisibility()
+                val json = Gson().toJson(track)
+
+                val intent = Intent(this, AudioPlayerActivity::class.java)
+                intent.putExtra("track", json)
+                startActivity(intent)
             }
             recentSearchesRecyclerView.adapter = historyAdapter
         } else {
