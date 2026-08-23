@@ -64,11 +64,7 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         trackAdapter = TrackAdapter(currentTracks) { track ->
             searchHistory.add(track)
-            val json = Gson().toJson(track)
-
-            val intent = Intent(this, AudioPlayerActivity::class.java)
-            intent.putExtra("track", json)
-            startActivity(intent)
+            openAudioPlayer(track)
         }
         recyclerView.adapter = trackAdapter
         searchText = savedInstanceState?.getString(SEARCH_TEXT_KEY, "") ?: ""
@@ -163,6 +159,14 @@ class SearchActivity : AppCompatActivity() {
         placeholderEmpty.visibility = View.GONE
         placeholderError.visibility = View.VISIBLE
     }
+
+    private fun openAudioPlayer(track: Track){
+        val json = Gson().toJson(track)
+
+        val intent = Intent(this, AudioPlayerActivity::class.java)
+        intent.putExtra("track", json)
+        startActivity(intent)
+    }
     private fun updateHistoryVisibility() {
         val history = searchHistory.read()
         val shouldShowHistory = etSearch.hasFocus() && searchText.isEmpty() && history.isNotEmpty()
@@ -172,11 +176,7 @@ class SearchActivity : AppCompatActivity() {
             val historyAdapter = TrackAdapter(history) { track ->
                 searchHistory.add(track)
                 updateHistoryVisibility()
-                val json = Gson().toJson(track)
-
-                val intent = Intent(this, AudioPlayerActivity::class.java)
-                intent.putExtra("track", json)
-                startActivity(intent)
+                openAudioPlayer(track)
             }
             recentSearchesRecyclerView.adapter = historyAdapter
         } else {

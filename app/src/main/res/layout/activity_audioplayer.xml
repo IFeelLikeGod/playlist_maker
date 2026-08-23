@@ -105,21 +105,21 @@
             android:id="@+id/addToPlaylist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:src="@drawable/add_to_playlist"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="@id/leftborder"
-            app:layout_constraintTop_toBottomOf="@id/trackArtistTime" />
+            app:layout_constraintTop_toTopOf="@id/playButton"
+            app:layout_constraintBottom_toBottomOf="@id/playButton" />
 
         <ImageView
             android:id="@+id/likeTheSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/like"
-            android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="@id/rightborder"
-            app:layout_constraintTop_toBottomOf="@id/trackArtistTime" />
+            app:layout_constraintTop_toTopOf="@id/playButton"
+            app:layout_constraintBottom_toBottomOf="@id/playButton" />
 
         <TextView
             android:id="@+id/tvDurationLabel"
@@ -146,6 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/detail_row_margin_top"
             android:text="@string/album_label"
+
             style="@style/DetailLabelTextStyle"
             app:layout_constraintStart_toStartOf="@id/leftborder"
             app:layout_constraintTop_toBottomOf="@id/tvDurationLabel" />

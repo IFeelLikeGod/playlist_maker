@@ -44,7 +44,7 @@
     <style name="DetailLabelTextStyle">
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">@dimen/detail_text_size</item>
-        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textColor">@color/text_color_for_player</item>
     </style>
 
     <style name="DetailValueTextStyle">

@@ -33,8 +33,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         val tvAlbumLabel = findViewById<TextView>(R.id.tvAlbumLabel)
         val tvYearLabel = findViewById<TextView>(R.id.tvYearLabel)
 
-
-
         trackName.text = track.trackName
         trackArtistTime.text = track.artistName
         tvDurationValue.text = track.trackTime
@@ -56,7 +54,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         else{
             tvYearValue.text = track.releaseDate.substringBefore("-")
         }
-
 
 
         Glide.with(trackImageView.context)
