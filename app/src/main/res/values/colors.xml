@@ -34,4 +34,5 @@
     <color name="text_recent_searches">#1A1B22</color>
     <color name="button_refresh_text_color">#FFFFFF</color>
     <color name="text_color_for_player">#AEAFB4</color>
+    <color name="player_background">#FFFFFF</color>
 </resources>
