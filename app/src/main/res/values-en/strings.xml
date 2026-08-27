@@ -29,4 +29,14 @@
     <string name="nothing_found">nothing found</string>
     <string name="no_connection">No Internet connection </string>
     <string name="refresh">Refresh</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear_recent_searches">Clear recent searches</string>
+
+    <string name="play">Play</string>
+    <string name="duration_label">Duration</string>
+    <string name="album_label">Album</string>
+    <string name="year_label">Year</string>
+    <string name="genre_label">Genre</string>
+    <string name="country_label">Country</string>
+
 </resources>

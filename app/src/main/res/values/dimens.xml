@@ -42,8 +42,8 @@
     <dimen name="track_item_padding_vertical">8dp</dimen>
     <dimen name="track_image_size">45dp</dimen>
     <dimen name="track_text_margin_start">5dp</dimen>
-    <dimen name="track_name_text_size">16sp</dimen>
-    <dimen name="track_artist_time_text_size">12sp</dimen>
+    <dimen name="track_name_text_size">22sp</dimen>
+    <dimen name="track_artist_time_text_size">14sp</dimen>
     <dimen name="track_image_corner_radius">8dp</dimen>
     <dimen name="track_artist_time_margin_top">1dp</dimen>
     <dimen name="track_chevron_size">24dp</dimen>
@@ -53,4 +53,18 @@
     <dimen name="placeholder_text_margin_top">16dp</dimen>
     <dimen name="placeholder_text_size">19sp</dimen>
     <dimen name="placeholder_button_margin_top">16dp</dimen>
+
+    <!-- resent searches -->
+    <dimen name="recent_searches_size">19sp</dimen>
+    <dimen name="recent_searches_margin_top">18dp</dimen>
+    <dimen name="recent_searches_left">16dp</dimen>
+
+    <!-- textView for audio-player -->
+    <dimen name="detail_text_size">13sp</dimen>
+    <dimen name="detail_row_margin_top">16dp</dimen>
+
+    <!-- arrow_back for audio-player -->
+    <dimen name="arrow_back_audio_margin_top">24dp</dimen>
+    <dimen name="arrow_back_audio_margin_start">12dp</dimen>
+
 </resources>
