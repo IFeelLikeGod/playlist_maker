@@ -2,7 +2,9 @@ package com.example.playlist_maker
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -18,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
+import android.os.Handler
+import android.widget.ImageButton
 
 class SearchActivity : AppCompatActivity() {
 
@@ -37,10 +41,18 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var ivClear: ImageView
+    private var handler = Handler(Looper.getMainLooper())
+    private var searchRunnable: Runnable ?= null
+    private lateinit var progressBar: View
+    private var isClickAllowed = true
+
     private var searchText: String = ""
 
     companion object {
         private const val SEARCH_TEXT_KEY = "SEARCH_TEXT_KEY"
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,13 +70,16 @@ class SearchActivity : AppCompatActivity() {
         btnClear = findViewById(R.id.btnClear)
         recentSearchesContainer=findViewById(R.id.recentSearchesContainer)
         recentSearchesRecyclerView=findViewById(R.id.recentSearchesRecyclerView)
+        progressBar = findViewById(R.id.progressBar)
 
         val ivBack = findViewById<ImageView>(R.id.ivBack)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         trackAdapter = TrackAdapter(currentTracks) { track ->
             searchHistory.add(track)
-            openAudioPlayer(track)
+            if (clickDebounce()) {
+                openAudioPlayer(track)
+            }
         }
         recyclerView.adapter = trackAdapter
         searchText = savedInstanceState?.getString(SEARCH_TEXT_KEY, "") ?: ""
@@ -78,8 +93,24 @@ class SearchActivity : AppCompatActivity() {
 
         etSearch.addTextChangedListener { text ->
             searchText = text?.toString() ?: ""
-            ivClear.visibility = if (searchText.isEmpty()) View.GONE else View.VISIBLE
+
+            ivClear.visibility =
+                if (searchText.isEmpty()) View.GONE else View.VISIBLE
+
             updateHistoryVisibility()
+
+            if (searchText.isNotBlank()) {
+                searchDebounce()
+            } else {
+                searchRunnable?.let {
+                    handler.removeCallbacks(it)
+                }
+
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+                placeholderEmpty.visibility = View.GONE
+                placeholderError.visibility = View.GONE
+            }
         }
         etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -131,7 +162,29 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
+    private fun clickDebounce(): Boolean{
+        val current = isClickAllowed
+        if (isClickAllowed){
+            isClickAllowed = false
+            handler.postDelayed({isClickAllowed = true}, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
 
+    private fun searchDebounce() {
+        searchRunnable?.let {
+            handler.removeCallbacks(it)
+        }
+
+        searchRunnable = Runnable {
+            performSearch(searchText)
+        }
+
+        handler.postDelayed(
+            searchRunnable!!,
+            SEARCH_DEBOUNCE_DELAY
+        )
+    }
     private fun showKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
@@ -176,7 +229,9 @@ class SearchActivity : AppCompatActivity() {
             val historyAdapter = TrackAdapter(history) { track ->
                 searchHistory.add(track)
                 updateHistoryVisibility()
+                if (clickDebounce()){
                 openAudioPlayer(track)
+                }
             }
             recentSearchesRecyclerView.adapter = historyAdapter
         } else {
@@ -185,15 +240,28 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun performSearch(query: String) {
         if (query.isBlank()) return
+
         lastSearchText = query
 
+        progressBar.visibility = View.VISIBLE
+
+        recyclerView.visibility = View.GONE
+        placeholderEmpty.visibility = View.GONE
+        placeholderError.visibility = View.GONE
+        recentSearchesContainer.visibility = View.GONE
+
         RetrofitClient.iTunesApi.search(query).enqueue(object : Callback<TrackSearchResponse> {
+
             override fun onResponse(
                 call: Call<TrackSearchResponse>,
                 response: Response<TrackSearchResponse>
             ) {
+                progressBar.visibility = View.GONE
+
                 if (response.isSuccessful) {
-                    val tracks = response.body()?.results?.map { it.toTrack() } ?: emptyList()
+                    val tracks = response.body()?.results?.map {
+                        it.toTrack()
+                    } ?: emptyList()
 
                     currentTracks.clear()
                     currentTracks.addAll(tracks)
@@ -209,7 +277,11 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<TrackSearchResponse>, t: Throwable) {
+            override fun onFailure(
+                call: Call<TrackSearchResponse>,
+                t: Throwable
+            ) {
+                progressBar.visibility = View.GONE
                 showErrorPlaceholder()
             }
         })
