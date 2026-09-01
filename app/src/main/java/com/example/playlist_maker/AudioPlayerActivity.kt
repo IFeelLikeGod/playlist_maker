@@ -120,6 +120,7 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        handler.removeCallbacks(updateTimeRunnable)
         mediaPlayer.release()
     }
 
