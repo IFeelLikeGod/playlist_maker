@@ -114,6 +114,7 @@ class SearchActivity : AppCompatActivity() {
         }
         etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                searchRunnable?.let { handler.removeCallbacks(it) }
                 performSearch(searchText)
                 true
             } else {

@@ -66,5 +66,7 @@
     <!-- arrow_back for audio-player -->
     <dimen name="arrow_back_audio_margin_top">24dp</dimen>
     <dimen name="arrow_back_audio_margin_start">12dp</dimen>
-
+    <dimen name="progress_indicator_size">44dp</dimen>
+    <dimen name="progress_indicator_margin_top">64dp</dimen>
+    <dimen name="progress_indicator_thickness">4dp</dimen>
 </resources>
