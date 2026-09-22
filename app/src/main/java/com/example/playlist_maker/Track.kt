@@ -12,9 +12,8 @@ class Track(
     val collectionName: String? = null, // Название коллекции
     val releaseDate: String? = null, // Дата выхода
     val primaryGenreName: String? = null, // Жанр
-    val country: String? = null // Страна исполнителя
-
-)
+    val country: String? = null, // Страна исполнителя
+    val previewUrl: String? = null)
 
 val trackList = ArrayList<Track>().apply {
     add(

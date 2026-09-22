@@ -83,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/play_button"
+            android:enabled="false"
             android:layout_marginTop="24dp"
             android:contentDescription="@string/play"
             android:background="@android:color/transparent"
@@ -91,6 +92,7 @@
             app:layout_constraintEnd_toEndOf="@id/rightborder"/>
 
         <TextView
+            android:id="@+id/trackTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0:30"

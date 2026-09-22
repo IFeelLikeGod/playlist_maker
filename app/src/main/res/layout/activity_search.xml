@@ -8,6 +8,19 @@
     android:fitsSystemWindows="true"
     android:background="@color/bg_screen">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/progress_indicator_size"
+        android:layout_height="@dimen/progress_indicator_size"
+        android:layout_marginTop="@dimen/progress_indicator_margin_top"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:indicatorColor="@color/progress_indicator_color"
+        app:trackThickness="@dimen/progress_indicator_thickness"
+        app:layout_constraintTop_toBottomOf="@id/searchContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageButton
         android:id="@+id/ivBack"
         android:layout_width="@dimen/search_back_button_size"

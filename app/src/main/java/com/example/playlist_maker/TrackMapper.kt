@@ -12,7 +12,8 @@ fun TrackDto.toTrack(): Track {
         collectionName = this.collectionName,
         releaseDate = this.releaseDate,
         primaryGenreName = this.primaryGenreName,
-        country = this.country
+        country = this.country,
+        previewUrl = this.previewUrl
     )
 }
 
