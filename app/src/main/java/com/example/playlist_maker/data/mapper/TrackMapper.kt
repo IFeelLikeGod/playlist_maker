@@ -1,5 +1,7 @@
-package com.example.playlist_maker
+package com.example.playlist_maker.data.mapper
 
+import com.example.playlist_maker.data.dto.TrackDto
+import com.example.playlist_maker.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
