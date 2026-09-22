@@ -1,19 +1,22 @@
-package com.example.playlist_maker
+package com.example.playlist_maker.presentation.player
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlist_maker.R
+import com.example.playlist_maker.data.mapper.getCoverArtwork
+import com.example.playlist_maker.domain.models.Track
 import com.google.gson.Gson
-import android.widget.ImageButton
-import java.util.Locale
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AudioPlayerActivity : AppCompatActivity() {
 
