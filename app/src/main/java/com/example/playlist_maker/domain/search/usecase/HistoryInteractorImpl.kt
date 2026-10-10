@@ -1,7 +1,7 @@
-package com.example.playlist_maker.domain.usecase
+package com.example.playlist_maker.domain.search.usecase
 
 import com.example.playlist_maker.domain.models.Track
-import com.example.playlist_maker.domain.repository.HistoryRepository
+import com.example.playlist_maker.domain.search.repository.HistoryRepository
 
 class HistoryInteractorImpl(
     private val repository: HistoryRepository

@@ -1,6 +1,6 @@
-package com.example.playlist_maker.data.mapper
+package com.example.playlist_maker.data.search.mapper
 
-import com.example.playlist_maker.data.dto.TrackDto
+import com.example.playlist_maker.data.search.dto.TrackDto
 import com.example.playlist_maker.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -19,6 +19,3 @@ fun TrackDto.toTrack(): Track {
     )
 }
 
-fun Track.getCoverArtwork(): String {
-    return this.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
-}

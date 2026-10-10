@@ -14,7 +14,7 @@ class Track(
     val primaryGenreName: String? = null, // Жанр
     val country: String? = null, // Страна исполнителя
     val previewUrl: String? = null)
-
+fun Track.getCoverArtwork() = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 val trackList = ArrayList<Track>().apply {
     add(
         Track(

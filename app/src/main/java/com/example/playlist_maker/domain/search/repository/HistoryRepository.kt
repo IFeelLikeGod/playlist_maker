@@ -1,8 +1,8 @@
-package com.example.playlist_maker.domain.usecase
+package com.example.playlist_maker.domain.search.repository
 
 import com.example.playlist_maker.domain.models.Track
 
-interface HistoryInteractor {
+interface HistoryRepository {
     fun getHistory(): List<Track>
     fun addTrack(track: Track)
     fun clearHistory()
