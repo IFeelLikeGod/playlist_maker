@@ -38,6 +38,7 @@ android {
 
 dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("io.insert-koin:koin-android:3.3.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation("androidx.activity:activity-ktx:1.9.3")
     implementation("com.github.bumptech.glide:glide:4.16.0")

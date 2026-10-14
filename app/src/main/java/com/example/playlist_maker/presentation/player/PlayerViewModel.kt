@@ -5,9 +5,6 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlist_maker.creator.Creator
 import com.example.playlist_maker.domain.player.usecase.PlayerInteractor
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -80,11 +77,5 @@ class PlayerViewModel(
     companion object {
         private const val START_TIME = "00:00"
         private const val TIMER_DELAY = 300L
-
-        fun getFactory(previewUrl: String?) = viewModelFactory {
-            initializer {
-                PlayerViewModel(previewUrl, Creator.providePlayerInteractor())
-            }
-        }
     }
 }
