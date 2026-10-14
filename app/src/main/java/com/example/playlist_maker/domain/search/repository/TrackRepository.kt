@@ -1,8 +1,8 @@
-package com.example.playlist_maker.domain.usecase
+package com.example.playlist_maker.domain.search.repository
 
 import com.example.playlist_maker.domain.models.Track
 
-interface TracksInteractor {
+interface TrackRepository {
     fun search(query: String, consumer: TracksConsumer)
 
     interface TracksConsumer {

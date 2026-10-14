@@ -1,10 +1,10 @@
-package com.example.playlist_maker.data.repository
+package com.example.playlist_maker.data.search.repository
 
 import android.content.SharedPreferences
 import com.example.playlist_maker.domain.models.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.example.playlist_maker.domain.repository.HistoryRepository
+import com.example.playlist_maker.domain.search.repository.HistoryRepository
 
 class HistoryRepositoryImpl(
     private val preferences: SharedPreferences

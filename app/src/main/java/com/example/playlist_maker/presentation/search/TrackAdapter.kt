@@ -1,5 +1,6 @@
 package com.example.playlist_maker.presentation.search
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,16 @@ import com.example.playlist_maker.R
 import com.example.playlist_maker.domain.models.Track
 
 class TrackAdapter(
-    private val tracks: List<Track>,
-    private val onTrackClick:(Track) -> Unit
+    private val onTrackClick: (Track) -> Unit
 ) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+
+    private var tracks: List<Track> = emptyList()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setTracks(newTracks: List<Track>) {
+        tracks = newTracks
+        notifyDataSetChanged()
+    }
 
     class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val trackImage: ImageView = view.findViewById(R.id.trackImage)
@@ -27,15 +35,15 @@ class TrackAdapter(
             trackArtistName.text = "${track.artistName} • "
             trackTime.text = track.trackTime
 
-            val cornerRadiusPx = itemView.resources.getDimensionPixelSize(R.dimen.track_image_corner_radius)
+            val cornerRadiusPx =
+                itemView.resources.getDimensionPixelSize(R.dimen.track_image_corner_radius)
 
             Glide.with(itemView.context)
                 .load(track.artworkUrl100)
-                .transform(RoundedCorners(8))
+                .transform(RoundedCorners(cornerRadiusPx))
                 .into(trackImage)
-            itemView.setOnClickListener {
-                onTrackClick(track)
-            }
+
+            itemView.setOnClickListener { onTrackClick(track) }
         }
     }
 
