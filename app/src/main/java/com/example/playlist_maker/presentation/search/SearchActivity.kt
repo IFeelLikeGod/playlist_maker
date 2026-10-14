@@ -14,18 +14,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlist_maker.R
 import com.example.playlist_maker.domain.models.Track
 import com.example.playlist_maker.presentation.player.AudioPlayerActivity
 import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: SearchViewModel
-
+    private val viewModel: SearchViewModel by viewModel()
     private lateinit var etSearch: AppCompatEditText
     private lateinit var ivClear: ImageView
     private lateinit var placeholderEmpty: LinearLayout
@@ -47,7 +46,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        viewModel = ViewModelProvider(this, SearchViewModel.getFactory())[SearchViewModel::class.java]
 
         etSearch = findViewById(R.id.etSearch)
         ivClear = findViewById(R.id.ivClear)
