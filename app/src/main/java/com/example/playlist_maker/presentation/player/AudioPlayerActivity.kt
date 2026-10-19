@@ -13,10 +13,13 @@ import com.example.playlist_maker.R
 import com.example.playlist_maker.domain.models.getCoverArtwork
 import com.example.playlist_maker.domain.models.Track
 import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class AudioPlayerActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: PlayerViewModel
+    private lateinit var track: Track
+    private val viewModel: PlayerViewModel by viewModel { parametersOf(track.previewUrl) }
     private lateinit var playButton: ImageButton
     private lateinit var trackTimeView: TextView
 
@@ -25,7 +28,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_audioplayer)
 
         val json = intent.getStringExtra("track")
-        val track = Gson().fromJson(json, Track::class.java)
+        track = Gson().fromJson(json, Track::class.java)
 
         val ivBack = findViewById<ImageButton>(R.id.ivBack)
         val trackImageView = findViewById<ImageView>(R.id.trackImage)
@@ -58,8 +61,12 @@ class AudioPlayerActivity : AppCompatActivity() {
             tvYearLabel.visibility = View.GONE
             tvYearValue.visibility = View.GONE
         } else {
-            tvYearValue.text = track.releaseDate.substringBefore("-")
-        }
+            track.releaseDate?.let {
+                tvYearValue.text = it.substringBefore("-")
+            } ?: run {
+                tvYearLabel.visibility = View.GONE
+                tvYearValue.visibility = View.GONE
+            }        }
 
         Glide.with(trackImageView.context)
             .load(track.getCoverArtwork())
@@ -67,11 +74,10 @@ class AudioPlayerActivity : AppCompatActivity() {
             .transform(RoundedCorners(8))
             .into(trackImageView)
 
+        viewModel.observeState().observe(this) { render(it) }
 
-        viewModel = ViewModelProvider(
-            this,
-            PlayerViewModel.getFactory(track.previewUrl)
-        )[PlayerViewModel::class.java]
+        ivBack.setOnClickListener { finish() }
+        playButton.setOnClickListener { viewModel.onPlayButtonClicked() }
 
         viewModel.observeState().observe(this) { render(it) }
 
