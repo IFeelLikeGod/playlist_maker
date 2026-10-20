@@ -10,7 +10,9 @@ android {
             minorApiLevel = 1
         }
     }
-
+    buildFeatures {
+        viewBinding = true
+    }
     defaultConfig {
         applicationId = "com.example.playlist_maker"
         minSdk = 24
@@ -38,6 +40,8 @@ android {
 
 dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("io.insert-koin:koin-android:3.3.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation("androidx.activity:activity-ktx:1.9.3")
