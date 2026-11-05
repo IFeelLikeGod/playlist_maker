@@ -31,6 +31,11 @@
     <string name="refresh">Refresh</string>
     <string name="recent_searches">Recent searches</string>
     <string name="clear_recent_searches">Clear recent searches</string>
+    <string name="library">Library</string>
+    <string name="library_is_empty">Your library is empty</string>
+    <string name="new_playlist">New playlist</string>
+    <string name="playlist_is_empty">You do not create any playlist yet</string>
+
 
     <string name="play">Play</string>
     <string name="duration_label">Duration</string>
@@ -38,5 +43,8 @@
     <string name="year_label">Year</string>
     <string name="genre_label">Genre</string>
     <string name="country_label">Country</string>
+
+    <string name="favorites">favorites</string>
+    <string name="playlists">Playlists</string>
 
 </resources>

@@ -36,12 +36,17 @@
     <string name="refresh">Обновить</string>
     <string name="recent_searches">Вы искали</string>
     <string name="clear_recent_searches">Очистить историю</string>
-
+    <string name="library">Медиатека</string>
+    <string name="library_is_empty">Ваша медиатека пуста</string>
+    <string name="new_playlist">Новый плейлист</string>
     <string name="play">Проигрывать</string>
     <string name="duration_label">Длительность</string>
     <string name="album_label">Альбом</string>
     <string name="year_label">Год</string>
     <string name="genre_label">Жанр</string>
     <string name="country_label">Страна</string>
+    <string name="playlist_is_empty">Вы не создали ни одного плейлиста</string>
+    <string name="favorites">Избранные треки</string>
+    <string name="playlists">Плейлисты</string>
 
 </resources>
