@@ -13,18 +13,20 @@ import com.example.playlist_maker.domain.player.repository.PlayerRepository
 import com.example.playlist_maker.domain.player.usecase.PlayerInteractor
 import com.example.playlist_maker.domain.player.usecase.PlayerInteractorImpl
 import com.example.playlist_maker.domain.search.repository.HistoryRepository
-import com.example.playlist_maker.domain.search.repository.SettingsRepository
+import com.example.playlist_maker.domain.settings.repository.SettingsRepository
 import com.example.playlist_maker.domain.search.repository.TrackRepository
 import com.example.playlist_maker.domain.search.usecase.HistoryInteractor
 import com.example.playlist_maker.domain.search.usecase.HistoryInteractorImpl
-import com.example.playlist_maker.domain.search.usecase.SettingsInteractor
-import com.example.playlist_maker.domain.search.usecase.SettingsInteractorImpl
+import com.example.playlist_maker.domain.settings.usecase.SettingsInteractor
+import com.example.playlist_maker.domain.settings.usecase.SettingsInteractorImpl
 import com.example.playlist_maker.domain.search.usecase.TracksInteractor
 import com.example.playlist_maker.domain.search.usecase.TracksInteractorImpl
-import com.example.playlist_maker.domain.settings.SettingsRepositoryImpl
+import com.example.playlist_maker.data.settings.repository.SettingsRepositoryImpl
 import com.example.playlist_maker.domain.sharing.navigator.ExternalNavigator
 import com.example.playlist_maker.domain.sharing.usecase.SharingInteractor
 import com.example.playlist_maker.domain.sharing.usecase.SharingInteractorImpl
+import com.example.playlist_maker.presentation.library.favorites.FavoritesViewModel
+import com.example.playlist_maker.presentation.library.playlists.PlaylistsViewModel
 import com.example.playlist_maker.presentation.player.PlayerViewModel
 import com.example.playlist_maker.presentation.search.SearchViewModel
 import com.example.playlist_maker.presentation.settings.SettingsViewModel
@@ -60,7 +62,7 @@ val dataModule = module {
     }
 
     single<ExternalNavigator> { ExternalNavigatorImpl(androidContext()) }
-    single<PlayerRepository> { PlayerRepositoryImpl() }
+    factory<PlayerRepository> { PlayerRepositoryImpl() }
 }
 val domainModule = module{
     factory<TracksInteractor>{ TracksInteractorImpl(get()) }
@@ -72,7 +74,9 @@ val domainModule = module{
 val presentationModule = module{
     viewModel { SearchViewModel(get(), get()) }
     viewModel { SettingsViewModel(get(), get()) }
-    viewModel {(privateUrl: String?) -> PlayerViewModel(get(), get()) }
+    viewModel { (previewUrl: String?) -> PlayerViewModel(previewUrl, get()) }
+    viewModel { FavoritesViewModel() }
+    viewModel { PlaylistsViewModel() }
 }
 
 
