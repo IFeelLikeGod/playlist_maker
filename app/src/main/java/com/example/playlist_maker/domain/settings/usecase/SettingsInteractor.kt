@@ -1,4 +1,4 @@
-package com.example.playlist_maker.domain.search.usecase
+package com.example.playlist_maker.domain.settings.usecase
 
 import com.example.playlist_maker.domain.models.ThemeSettings
 

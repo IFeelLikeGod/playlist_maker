@@ -1,10 +1,9 @@
-package com.example.playlist_maker.domain.settings
+package com.example.playlist_maker.data.settings.repository
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.example.playlist_maker.domain.models.ThemeSettings
-import com.example.playlist_maker.domain.search.repository.SettingsRepository
-
+import com.example.playlist_maker.domain.settings.repository.SettingsRepository
 
 class SettingsRepositoryImpl (private val prefs: SharedPreferences,
                               private val systemDarkTheme: Boolean) : SettingsRepository {
