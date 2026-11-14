@@ -1,4 +1,5 @@
-package com.example.playlist_maker.domain.search.repository
+package com.example.playlist_maker.domain.settings.repository
+
 import com.example.playlist_maker.domain.models.ThemeSettings
 
 interface SettingsRepository {

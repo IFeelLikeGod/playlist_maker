@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.playlist_maker.domain.models.ThemeSettings
-import com.example.playlist_maker.domain.search.usecase.SettingsInteractor
+import com.example.playlist_maker.domain.settings.usecase.SettingsInteractor
 import com.example.playlist_maker.domain.sharing.usecase.SharingInteractor
 
 class SettingsViewModel(

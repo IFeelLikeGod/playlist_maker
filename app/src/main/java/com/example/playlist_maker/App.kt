@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.playlist_maker.di.dataModule
 import com.example.playlist_maker.di.domainModule
 import com.example.playlist_maker.di.presentationModule
-import com.example.playlist_maker.domain.search.usecase.SettingsInteractor
+import com.example.playlist_maker.domain.settings.usecase.SettingsInteractor
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
