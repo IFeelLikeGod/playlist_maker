@@ -3,17 +3,21 @@ package com.example.playlist_maker.domain.models
 
 
 
-class Track(
 
-    val trackName: String,      // Название композиции
-    val artistName: String,     // Имя исполнителя
-    val trackTime: String,      // Продолжительность трека
-    val artworkUrl100: String,  // Ссылка на изображение обложки
-    val collectionName: String? = null, // Название коллекции
-    val releaseDate: String? = null, // Дата выхода
-    val primaryGenreName: String? = null, // Жанр
-    val country: String? = null, // Страна исполнителя
-    val previewUrl: String? = null)
+class Track(
+    val trackId: Long = 0L,
+    val trackName: String,
+    val artistName: String,
+    val trackTime: String,
+    val artworkUrl100: String,
+    val collectionName: String? = null,
+    val releaseDate: String? = null,
+    val primaryGenreName: String? = null,
+    val country: String? = null,
+    val previewUrl: String? = null,
+    var isFavorite: Boolean = false
+)
+
 fun Track.getCoverArtwork() = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 val trackList = ArrayList<Track>().apply {
     add(
