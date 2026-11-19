@@ -2,8 +2,6 @@ package com.example.playlist_maker.presentation.search
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +17,9 @@ import com.example.playlist_maker.databinding.FragmentSearchBinding
 import com.example.playlist_maker.domain.models.Track
 import com.google.gson.Gson
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -31,7 +32,7 @@ class SearchFragment : Fragment() {
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
 
-    private val handler = Handler(Looper.getMainLooper())
+
     private var isClickAllowed = true
 
     override fun onCreateView(
@@ -109,7 +110,10 @@ class SearchFragment : Fragment() {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+            lifecycleScope.launch {
+                delay(CLICK_DEBOUNCE_DELAY)
+                isClickAllowed = true
+            }
         }
         return current
     }
@@ -127,7 +131,6 @@ class SearchFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        handler.removeCallbacksAndMessages(null)
         isClickAllowed = true
         _binding = null
         super.onDestroyView()

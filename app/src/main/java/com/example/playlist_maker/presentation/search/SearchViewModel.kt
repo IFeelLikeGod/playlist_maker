@@ -1,14 +1,15 @@
 package com.example.playlist_maker.presentation.search
 
-import android.app.Application
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlist_maker.domain.models.Track
 import com.example.playlist_maker.domain.search.usecase.HistoryInteractor
 import com.example.playlist_maker.domain.search.usecase.TracksInteractor
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val tracksInteractor: TracksInteractor,
@@ -18,8 +19,7 @@ class SearchViewModel(
     private val stateLiveData = MutableLiveData<SearchState>(SearchState.Default)
     fun observeState(): LiveData<SearchState> = stateLiveData
 
-    private val handler = Handler(Looper.getMainLooper())
-    private var searchRunnable: Runnable? = null
+    private var searchJob: Job? = null
 
     private var currentText = ""
     private var lastQuery = ""
@@ -28,15 +28,14 @@ class SearchViewModel(
     @Volatile
     private var requestId = 0
 
-    // ---------- действия пользователя ----------
 
     fun onQueryChanged(text: String) {
-        if (text == currentText) return   // например, после поворота экрана
+        if (text == currentText) return
         currentText = text
         cancelDebounce()
 
         if (text.isBlank()) {
-            requestId++                   // ответ на старый запрос больше не нужен
+            requestId++
             showIdleState()
         } else {
             if (stateLiveData.value is SearchState.History) {
@@ -68,7 +67,7 @@ class SearchViewModel(
         showIdleState()
     }
 
-    // ---------- внутренняя кухня ----------
+
 
     private fun showIdleState() {
         val history = historyInteractor.getHistory()
@@ -81,40 +80,36 @@ class SearchViewModel(
     }
 
     private fun searchDebounce(query: String) {
-        val runnable = Runnable { search(query) }
-        searchRunnable = runnable
-        handler.postDelayed(runnable, SEARCH_DEBOUNCE_DELAY)
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch{
+            delay(SEARCH_DEBOUNCE_DELAY)
+            search(query)
+        }
+
     }
 
     private fun cancelDebounce() {
-        searchRunnable?.let { handler.removeCallbacks(it) }
-        searchRunnable = null
+        searchJob?.cancel()
     }
 
     private fun search(query: String) {
         if (query.isBlank()) return
-
-        lastQuery = query
-        val id = ++requestId
         stateLiveData.value = SearchState.Loading
-
-        tracksInteractor.search(query, object : TracksInteractor.TracksConsumer {
-            override fun consume(foundTracks: List<Track>, errorMessage: String?) {
-                if (id != requestId) return   // пришёл устаревший ответ
-                val newState = when {
-                    errorMessage != null -> SearchState.Error
-                    foundTracks.isEmpty() -> SearchState.Empty
-                    else -> SearchState.Content(foundTracks)
+        lastQuery = query
+        viewModelScope.launch {
+            tracksInteractor.search(query)
+                .collect { pair ->
+                    val tracks = pair.first
+                    val errorMessage = pair.second
+                    val newState = when{
+                        tracks == null -> SearchState.Error
+                        tracks.isEmpty() -> SearchState.Empty
+                        else -> SearchState.Content(tracks)
+                    }
+                    stateLiveData.value = newState
                 }
-                stateLiveData.postValue(newState)
-            }
-        })
+        }
     }
-
-    override fun onCleared() {
-        handler.removeCallbacksAndMessages(null)
-    }
-
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }

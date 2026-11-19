@@ -1,41 +1,34 @@
 package com.example.playlist_maker.data.search.repository
 
-import com.example.playlist_maker.data.search.dto.TrackSearchResponse
 import com.example.playlist_maker.data.search.mapper.toTrack
 import com.example.playlist_maker.data.search.network.ITunesApi
 import com.example.playlist_maker.data.search.network.NetworkStateProvider
+import com.example.playlist_maker.domain.models.Track
 import com.example.playlist_maker.domain.search.repository.TrackRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+
 
 class TrackRepositoryImpl(
     private val api: ITunesApi,
     private val networkStateProvider: NetworkStateProvider
 ) : TrackRepository {
 
-    override fun search(query: String, consumer: TrackRepository.TracksConsumer) {
-        if (!networkStateProvider.isConnected()) {
-            consumer.consume(emptyList(), "Нет соединения с интернетом")
-            return
+    override fun search(query: String): Flow<Pair<List<Track>?, String?>> = flow {
+        if (!networkStateProvider.isConnected()){
+            emit(Pair(null, "Нет соединения с интернетом"))
+            return@flow
         }
+        try{
 
-        api.search(query).enqueue(object : Callback<TrackSearchResponse> {
-            override fun onResponse(
-                call: Call<TrackSearchResponse>,
-                response: Response<TrackSearchResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val tracks = response.body()?.results?.map { it.toTrack() } ?: emptyList()
-                    consumer.consume(tracks, null)
-                } else {
-                    consumer.consume(emptyList(), "Ошибка сервера")
-                }
-            }
-
-            override fun onFailure(call: Call<TrackSearchResponse>, t: Throwable) {
-                consumer.consume(emptyList(), "Нет соединения с интернетом")
-            }
-        })
-    }
+            val response = api.search(query)
+            val tracks = response.results.map { it.toTrack() }
+            emit(Pair(tracks, null))
+        }
+        catch (e: Exception){
+            emit(Pair(null, "Ошибка сервера"))
+        }
+    }.flowOn(Dispatchers.IO)
 }
