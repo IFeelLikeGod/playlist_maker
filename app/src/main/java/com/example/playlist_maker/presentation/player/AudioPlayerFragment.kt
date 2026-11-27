@@ -1,18 +1,21 @@
-
 package com.example.playlist_maker.presentation.player
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlist_maker.R
 import com.example.playlist_maker.databinding.FragmentAudioPlayerBinding
 import com.example.playlist_maker.domain.models.Track
 import com.example.playlist_maker.domain.models.getCoverArtwork
+import com.example.playlist_maker.presentation.library.playlists.PlaylistsBottomSheetAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -23,6 +26,7 @@ class AudioPlayerFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var track: Track
+    private lateinit var playlistsBottomSheetAdapter: PlaylistsBottomSheetAdapter
 
     private val viewModel: PlayerViewModel by viewModel {
         parametersOf(track.previewUrl, track)
@@ -82,6 +86,47 @@ class AudioPlayerFragment : Fragment() {
             .transform(RoundedCorners(8))
             .into(binding.trackImage)
 
+        // Адаптер для плейлистов в шторке
+        playlistsBottomSheetAdapter = PlaylistsBottomSheetAdapter { playlist ->
+            viewModel.addTrackToPlaylist(playlist)
+        }
+        binding.rvPlaylistsBottomSheet.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPlaylistsBottomSheet.adapter = playlistsBottomSheetAdapter
+
+        // Поведение шторки (BottomSheetBehavior)
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.playlistsBottomSheet).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+        }
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        binding.overlay.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                binding.overlay.alpha = (slideOffset + 1f) / 2f
+            }
+        })
+
+        // Нажатие на кнопку добавления в плейлист
+        binding.addToPlaylist.setOnClickListener {
+            viewModel.getPlaylists()
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+
+        // Нажатие на "Новый плейлист" в шторке
+        binding.btnNewPlaylistBottomSheet.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            findNavController().navigate(R.id.action_audioPlayerFragment_to_newPlaylistFragment)
+        }
+
         // Состояние аудиоплеера
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
@@ -89,7 +134,6 @@ class AudioPlayerFragment : Fragment() {
 
         // Состояние кнопки избранного
         viewModel.observeFavorite().observe(viewLifecycleOwner) { isFavorite ->
-
             binding.likeTheSong.setImageResource(
                 if (isFavorite) {
                     R.drawable.like_active
@@ -97,6 +141,29 @@ class AudioPlayerFragment : Fragment() {
                     R.drawable.like
                 }
             )
+        }
+
+        // Наблюдение за плейлистами для шторки
+        viewModel.observePlaylists().observe(viewLifecycleOwner) { playlists ->
+            playlistsBottomSheetAdapter.setPlaylists(playlists)
+        }
+
+        // Наблюдение за результатом добавления трека в плейлист
+        viewModel.observePlaylistAddState().observe(viewLifecycleOwner) { (isAdded, playlistName) ->
+            if (isAdded) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.added_to_playlist, playlistName),
+                    Toast.LENGTH_SHORT
+                ).show()
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.already_in_playlist, playlistName),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         // Нажатие на кнопку лайка
@@ -117,7 +184,6 @@ class AudioPlayerFragment : Fragment() {
 
     private fun render(state: PlayerState) {
         when (state) {
-
             is PlayerState.Default -> {
                 binding.playButton.isEnabled = false
                 binding.playButton.setImageResource(R.drawable.play_button)

@@ -1,4 +1,3 @@
-
 package com.example.playlist_maker.presentation.player
 
 import androidx.lifecycle.LiveData
@@ -6,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlist_maker.domain.db.FavoritesInteractor
+import com.example.playlist_maker.domain.db.PlaylistsInteractor
+import com.example.playlist_maker.domain.models.Playlist
 import com.example.playlist_maker.domain.models.Track
 import com.example.playlist_maker.domain.player.usecase.PlayerInteractor
 import kotlinx.coroutines.Job
@@ -18,18 +19,25 @@ class PlayerViewModel(
     previewUrl: String?,
     private val track: Track,
     private val playerInteractor: PlayerInteractor,
-    private val favoritesInteractor: FavoritesInteractor
+    private val favoritesInteractor: FavoritesInteractor,
+    private val playlistsInteractor: PlaylistsInteractor
 ) : ViewModel() {
 
     // Состояние аудиоплеера
     private val stateLiveData = MutableLiveData<PlayerState>(PlayerState.Default)
-
     fun observeState(): LiveData<PlayerState> = stateLiveData
 
     // Состояние избранного
     private val favoriteLiveData = MutableLiveData(false)
-
     fun observeFavorite(): LiveData<Boolean> = favoriteLiveData
+
+    // Состояние списка плейлистов
+    private val playlistLiveData = MutableLiveData<List<Playlist>>()
+    fun observePlaylists(): LiveData<List<Playlist>> = playlistLiveData
+
+    // Состояние результата добавления трека в плейлист (Pair<Успешно, ИмяПлейлиста>)
+    private val playlistAddStateLiveData = MutableLiveData<Pair<Boolean, String>>()
+    fun observePlaylistAddState(): LiveData<Pair<Boolean, String>> = playlistAddStateLiveData
 
     private var timerJob: Job? = null
     private val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
@@ -54,6 +62,28 @@ class PlayerViewModel(
                     stateLiveData.value = PlayerState.Prepared(START_TIME)
                 }
             )
+        }
+    }
+
+    // Загрузка списка плейлистов для шторки
+    fun getPlaylists() {
+        viewModelScope.launch {
+            playlistsInteractor.getPlaylists().collect { playlists ->
+                playlistLiveData.value = playlists
+            }
+        }
+    }
+
+    // Добавление трека в плейлист
+    fun addTrackToPlaylist(playlist: Playlist) {
+        if (playlist.trackIds.contains(track.trackId)) {
+            playlistAddStateLiveData.value = Pair(false, playlist.name)
+        } else {
+            viewModelScope.launch {
+                playlistsInteractor.addTrackToPlaylist(playlist, track)
+                playlistAddStateLiveData.value = Pair(true, playlist.name)
+                getPlaylists() // Обновляем список плейлистов
+            }
         }
     }
 
