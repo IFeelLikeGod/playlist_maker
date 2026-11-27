@@ -9,6 +9,9 @@
         android:id="@+id/libraryFragment"
         android:name="com.example.playlist_maker.presentation.library.LibraryFragment"
         tools:layout="@layout/fragment_library" />
+    <action
+        android:id="@+id/action_libraryFragment_to_audioPlayerFragment"
+        app:destination="@id/audioPlayerFragment" />
 
     <fragment
         android:id="@+id/searchFragment"
@@ -23,6 +26,16 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.playlist_maker.presentation.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.playlist_maker.presentation.library.favorites.FavoritesFragment"
+        tools:layout="@layout/fragment_favorites">
+
+        <action
+            android:id="@+id/action_favoritesFragment_to_audioPlayerFragment"
+            app:destination="@id/audioPlayerFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/audioPlayerFragment"

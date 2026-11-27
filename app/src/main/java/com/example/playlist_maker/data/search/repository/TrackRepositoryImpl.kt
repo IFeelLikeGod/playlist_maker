@@ -1,5 +1,7 @@
+
 package com.example.playlist_maker.data.search.repository
 
+import com.example.playlist_maker.data.db.AppDatabase
 import com.example.playlist_maker.data.search.mapper.toTrack
 import com.example.playlist_maker.data.search.network.ITunesApi
 import com.example.playlist_maker.data.search.network.NetworkStateProvider
@@ -10,25 +12,38 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-
 class TrackRepositoryImpl(
     private val api: ITunesApi,
-    private val networkStateProvider: NetworkStateProvider
+    private val networkStateProvider: NetworkStateProvider,
+    private val appDatabase: AppDatabase
 ) : TrackRepository {
 
     override fun search(query: String): Flow<Pair<List<Track>?, String?>> = flow {
-        if (!networkStateProvider.isConnected()){
+
+        if (!networkStateProvider.isConnected()) {
             emit(Pair(null, "Нет соединения с интернетом"))
             return@flow
         }
-        try{
 
+        try {
             val response = api.search(query)
-            val tracks = response.results.map { it.toTrack() }
+
+            val favoriteIds = appDatabase
+                .trackDao()
+                .getFavoriteTrackIds()
+                .toSet()
+
+            val tracks = response.results.map { dto ->
+                dto.toTrack().apply {
+                    isFavorite = trackId in favoriteIds
+                }
+            }
+
             emit(Pair(tracks, null))
-        }
-        catch (e: Exception){
+
+        } catch (e: Exception) {
             emit(Pair(null, "Ошибка сервера"))
         }
+
     }.flowOn(Dispatchers.IO)
 }
