@@ -1,4 +1,3 @@
-
 package com.example.playlist_maker.di
 
 import android.content.Context
@@ -7,8 +6,10 @@ import android.content.res.Configuration
 import androidx.room.Room
 
 import com.example.playlist_maker.data.db.AppDatabase
+import com.example.playlist_maker.data.db.convertors.PlaylistDbConvertor
 import com.example.playlist_maker.data.db.convertors.TrackDbConvertor
 import com.example.playlist_maker.data.db.repository.FavoritesRepositoryImpl
+import com.example.playlist_maker.data.db.repository.PlaylistsRepositoryImpl
 import com.example.playlist_maker.data.player.PlayerRepositoryImpl
 import com.example.playlist_maker.data.search.network.ITunesApi
 import com.example.playlist_maker.data.search.network.NetworkStateProvider
@@ -20,6 +21,9 @@ import com.example.playlist_maker.data.sharing.ExternalNavigatorImpl
 import com.example.playlist_maker.domain.db.FavoritesInteractor
 import com.example.playlist_maker.domain.db.FavoritesInteractorImpl
 import com.example.playlist_maker.domain.db.FavoritesRepository
+import com.example.playlist_maker.domain.db.PlaylistsInteractor
+import com.example.playlist_maker.domain.db.PlaylistsInteractorImpl
+import com.example.playlist_maker.domain.db.PlaylistsRepository
 import com.example.playlist_maker.domain.models.Track
 import com.example.playlist_maker.domain.player.repository.PlayerRepository
 import com.example.playlist_maker.domain.player.usecase.PlayerInteractor
@@ -38,6 +42,7 @@ import com.example.playlist_maker.domain.sharing.usecase.SharingInteractor
 import com.example.playlist_maker.domain.sharing.usecase.SharingInteractorImpl
 
 import com.example.playlist_maker.presentation.library.favorites.FavoritesViewModel
+import com.example.playlist_maker.presentation.library.playlists.NewPlaylistViewModel
 import com.example.playlist_maker.presentation.library.playlists.PlaylistsViewModel
 import com.example.playlist_maker.presentation.player.PlayerViewModel
 import com.example.playlist_maker.presentation.search.SearchViewModel
@@ -62,10 +67,13 @@ val dataModule = module {
             androidContext(),
             AppDatabase::class.java,
             "database.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     factory { TrackDbConvertor() }
+    factory { PlaylistDbConvertor(get()) }
 
     // SharedPreferences
     single<SharedPreferences> {
@@ -103,6 +111,11 @@ val dataModule = module {
         FavoritesRepositoryImpl(get(), get())
     }
 
+    // Playlists Repository
+    single<PlaylistsRepository> {
+        PlaylistsRepositoryImpl(get(), get())
+    }
+
     // Settings Repository
     single<SettingsRepository> {
         val nightMask = androidContext().resources.configuration.uiMode and
@@ -134,6 +147,10 @@ val domainModule = module {
 
     factory<FavoritesInteractor> {
         FavoritesInteractorImpl(get())
+    }
+
+    factory<PlaylistsInteractor> {
+        PlaylistsInteractorImpl(get())
     }
 
     factory<HistoryInteractor> {
@@ -170,11 +187,12 @@ val presentationModule = module {
         )
     }
 
-    // PlayerViewModel с поддержкой избранного
+    // PlayerViewModel с поддержкой избранного и плейлистов
     viewModel { (previewUrl: String?, track: Track) ->
         PlayerViewModel(
             previewUrl,
             track,
+            get(),
             get(),
             get()
         )
@@ -185,6 +203,10 @@ val presentationModule = module {
     }
 
     viewModel {
-        PlaylistsViewModel()
+        PlaylistsViewModel(get())
+    }
+
+    viewModel {
+        NewPlaylistViewModel(get())
     }
 }
